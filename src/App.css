@@ -13,7 +13,6 @@
   border: 2px black solid;
   border-radius: 10px;
   background-color: rgba(3, 5, 131, 0.35);
-
 }
 .form{
   grid-area: form;
@@ -38,7 +37,8 @@ grid-area: labelDistance;
 grid-area: inputDate;
 }
 input{
-  width: 300px;
+  text-align: center;
+  width: 200px;
   height: 50px;
   border: 2px black solid;
   border-radius: 10px;
@@ -55,9 +55,18 @@ grid-area: titleResult;
 }
 .resultList{
   grid-area: resultList;
-
   border: 2px black solid;
+  border-radius: 10px;
+
 }
+.itemResult{
+  display: grid;
+  grid-template-columns: repeat(3,  1fr);
+  justify-items: center;
+  align-items: center;
+
+}
+
 .submit{
   grid-area: submit;
   justify-self: start;
@@ -66,6 +75,7 @@ grid-area: titleResult;
   border-radius: 10px;
   border: 2px black solid;
 }
-.fa-pencil{
 
+.fa{
+font-size: 20px;
 }
