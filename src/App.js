@@ -47,6 +47,7 @@ const App = () => {
 
   return (
     <div className="container">
+      <div className="title">Учёт тренировок</div>
       <Form
         handleChange={handleChange}
         handleSubmit={handleSubmit}
