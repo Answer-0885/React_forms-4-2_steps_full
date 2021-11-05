@@ -1,38 +1,71 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.container{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: repeat(4, 200px 50px  auto);
+  grid-template-areas:
+          'form form form'
+          'titleResult titleResult titleResult'
+          'resultList resultList resultList'
+;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+  align-items: center;
+  border: 2px black solid;
+  border-radius: 10px;
+  background-color: rgba(3, 5, 131, 0.35);
 
-.App-link {
-  color: #61dafb;
 }
+.form{
+  grid-area: form;
+  display: grid;
+grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 50px);
+  grid-template-areas:
+          'labelDate labelDistance ...'
+          'inputDate inputDistance submit'
+;
+justify-items: center;
+  align-items: center;
+}
+.labelDate{
+grid-area: labelDate;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+}
+.labelDistance{
+grid-area: labelDistance;
+}
+.inputDate{
+grid-area: inputDate;
+}
+input{
+  width: 300px;
+  height: 50px;
+  border: 2px black solid;
+  border-radius: 10px;
+}
+.inputDistance{
+grid-area: inputDistance;
+
+}
+.titleResult{
+grid-area: titleResult;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  justify-items: center;
+}
+.resultList{
+  grid-area: resultList;
+
+  border: 2px black solid;
+}
+.submit{
+  grid-area: submit;
+  justify-self: start;
+  width: 100px;
+  height: 50px;
+  border-radius: 10px;
+  border: 2px black solid;
+}
+.fa-pencil{
+
 }
