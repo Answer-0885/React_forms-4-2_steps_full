@@ -11,16 +11,20 @@ const ResultList = ({ submit, handleRemove, handleEdit }) => {
         <span>Действия</span>
       </div>
       <ul className="resultList">
-        {submit.map(({ date, distance, id }) => (
-          <ItemResult
-            key={id}
-            date={date}
-            handleRemove={handleRemove}
-            handleEdit={handleEdit}
-            distance={distance}
-            id={id}
-          />
-        ))}
+        {submit.length > 0 ? (
+          submit.map(({ date, distance, id }) => (
+            <ItemResult
+              key={id}
+              date={date}
+              handleRemove={handleRemove}
+              handleEdit={handleEdit}
+              distance={distance}
+              id={id}
+            />
+          ))
+        ) : (
+          <li className="noData">No data to display</li>
+        )}
       </ul>
     </React.Fragment>
   );

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { nanoid } from "nanoid";
 
 const App = () => {
+  const indexIsFalse = -1;
   const dataDefault = {
     id: "",
     date: "",
@@ -13,8 +14,7 @@ const App = () => {
   const [form, setForm] = useState(dataDefault);
   const [submit, setSubmit] = useState([]);
   const handleChange = ({ target }) => {
-    const value = target.value;
-    setForm({ ...form, [target.name]: value });
+    setForm({ ...form, [target.name]: target.value });
   };
   const validateItem = (submit, form) => {
     return submit.map((elem) => {
@@ -33,9 +33,11 @@ const App = () => {
     const idxDate = submit.findIndex(({ date }) => date === form.date);
     const editItem = validateItem(submit, form);
     form.id = nanoid();
-    idxDate !== -1 && setSubmit((submit[idxDate] = editItem));
-    idxEdit !== -1 && setSubmit((submit[idxEdit] = editItem));
-    idxDate === -1 && idxEdit === -1 && setSubmit([...submit, form]);
+    idxDate !== indexIsFalse && setSubmit((submit[idxDate] = editItem));
+    idxEdit !== indexIsFalse && setSubmit((submit[idxEdit] = editItem));
+    idxDate === indexIsFalse &&
+      idxEdit === indexIsFalse &&
+      setSubmit([...submit, form]);
     setForm(dataDefault);
   };
 
