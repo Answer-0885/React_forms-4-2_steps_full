@@ -33,6 +33,7 @@ body{
 .form{
   grid-area: form;
   display: grid;
+
 grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 50px);
   grid-template-areas:
@@ -95,7 +96,6 @@ font-size: 20px;
   border-radius: 10px;
   border: 2px black solid;
 }
-
 .fa{
 font-size: 20px;
 }
@@ -103,7 +103,7 @@ font-size: 20px;
 .container{
   width: 350px;
   grid-template-columns: 350px;
-  grid-template-rows: 100px 300px  auto;
+  grid-template-rows: 50px 300px  auto;
   grid-template-areas:
           'title '
           'form '
