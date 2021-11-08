@@ -12,7 +12,6 @@ const ItemResult = ({ id, date, distance, handleRemove, handleEdit }) => {
           aria-hidden="true"
           onClick={() => handleEdit(id, date, distance)}
         />
-        {"  "}
         <i
           className="fa fa-times"
           onClick={() => handleRemove(id)}
