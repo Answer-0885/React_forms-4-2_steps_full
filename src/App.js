@@ -27,7 +27,7 @@ const App = () => {
     if (steps <= 0 || !date) {
       return;
     }
-    const foundId = tableData.find((d) => d.id === formattedDate);
+    const foundId = tableData.find((d) => d.id === formattedDate?.id);
 
     if (foundId) {
       const updateTableData = tableData.reduce((acc, item) => {
