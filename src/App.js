@@ -40,6 +40,7 @@ const App = () => {
           },
         ];
       }
+      item.edit = false;
       return [...acc, item];
     }, []);
   };
@@ -82,7 +83,9 @@ const App = () => {
 
   const handleEdit = (idItem, dateItem, distance) => {
     setDate(format(new Date(dateItem), "dd-MM-yyyy"));
-    setEdit(true);
+    const foundEdit = tableData.find((el) => el.id === idItem);
+    foundEdit.edit = true;
+
     setSteps(distance);
   };
 

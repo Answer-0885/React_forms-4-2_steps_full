@@ -2,7 +2,7 @@ import "App.css";
 import React from "react";
 import ItemResult from "./ItemResult";
 import { nanoid } from "nanoid";
-const ResultList = ({ tableData, handleRemove, handleEdit, edit }) => {
+const ResultList = ({ tableData, handleRemove, handleEdit }) => {
   return (
     <React.Fragment>
       <div className="titleResult">
@@ -12,7 +12,7 @@ const ResultList = ({ tableData, handleRemove, handleEdit, edit }) => {
       </div>
       <ul className="resultList">
         {tableData.length > 0 ? (
-          tableData.map(({ date, steps, id }) => (
+          tableData.map(({ date, steps, id, edit }) => (
             <ItemResult
               key={nanoid()}
               date={date}
