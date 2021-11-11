@@ -1,6 +1,6 @@
 import "App.css";
 import React from "react";
-
+import cn from "classnames";
 const ItemResult = ({ id, date, steps, handleRemove, handleEdit, edit }) => {
   return (
     <li className="itemResult">
@@ -8,13 +8,15 @@ const ItemResult = ({ id, date, steps, handleRemove, handleEdit, edit }) => {
       <span>{steps}</span>
       <div className="icons">
         <i
-          className="fa fa-pencil  fa-flip-horizontal"
+          className={cn("fa fa-pencil  fa-flip-horizontal", {
+            " fa-pencil-square-o": edit,
+          })}
           aria-hidden="true"
           onClick={() => handleEdit(id, date, steps)}
         />
         <i
           className="fa fa-times"
-          onClick={() => handleRemove(id)}
+          onClick={() => !edit && handleRemove(id)}
           aria-hidden="true"
         />
       </div>
