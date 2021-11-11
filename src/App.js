@@ -84,11 +84,14 @@ const App = () => {
   };
 
   const handleEdit = (idItem, dateItem, distance) => {
-    setDate(format(new Date(dateItem), "dd-MM-yyyy"));
     const foundEdit = tableData.find((el) => el.id === idItem);
-    foundEdit.edit = true;
-    setEdit(true);
-    setSteps(distance);
+    const isEdit = tableData.find((el) => el.edit);
+    if (!isEdit) {
+      setDate(format(new Date(dateItem), "dd-MM-yyyy"));
+      foundEdit.edit = !edit;
+      setEdit(!edit);
+      setSteps(distance);
+    }
   };
 
   return (
