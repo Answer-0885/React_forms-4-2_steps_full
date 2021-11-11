@@ -3,7 +3,7 @@ import React from "react";
 import cn from "classnames";
 const ItemResult = ({ id, date, steps, handleRemove, handleEdit, edit }) => {
   return (
-    <li className="itemResult">
+    <li className={cn("itemResult", { "itemResult activeItem": edit })}>
       <span>{date}</span>
       <span>{steps}</span>
       <div className="icons">

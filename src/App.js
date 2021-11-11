@@ -77,7 +77,7 @@ const App = () => {
     }
     clearForm();
   };
-  console.log(tableData);
+
   const handleRemove = (idItem) => {
     const updateSubmit = tableData.filter(({ id }) => id !== idItem);
     setTableData(updateSubmit);

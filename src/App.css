@@ -87,6 +87,9 @@ grid-area: titleResult;
   align-items: center;
   padding: 5px;
 }
+.activeItem{
+  background-color: #455cf6;
+}
 .icons{
   display: grid;
 grid-template-columns: repeat(2,1fr);
