@@ -16,7 +16,7 @@ const Form = ({ handleDate, handleSubmit, handleSteps, steps, date }) => {
         className="inputDate"
         id="date"
         name="date"
-        value={date}
+        value={format(new Date(date), "yyyy-MM-dd")}
         required={true}
       />
       <input

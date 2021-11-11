@@ -21,28 +21,41 @@ const App = () => {
   const clearForm = () => {
     setDate(new Date());
     setSteps(1);
+    setEdit(false);
+  };
+  const sumSteps = (foundId) => {
+    return tableData.reduce((acc, item) => {
+      if (item.id === foundId) {
+        return [
+          ...acc,
+          {
+            ...item,
+            steps: Number(item.steps) + Number(steps),
+          },
+        ];
+      }
+      return [...acc, item];
+    }, []);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (steps <= 0 || !date) {
       return;
     }
-    const foundId = tableData.find((d) => d.id === formattedDate?.id);
+    const foundId = tableData.find((d) => d.id === formattedDate)?.id;
 
-    if (foundId) {
-      const updateTableData = tableData.reduce((acc, item) => {
-        if (item.id === foundId) {
-          return [
-            ...acc,
-            {
-              ...item,
-              steps: Number(item.steps) + Number(steps),
-            },
-          ];
+    if (foundId && !edit) {
+      setTableData(sumSteps(foundId));
+    } else if (edit) {
+      const updateData = tableData.map((el) => {
+        if (el.id === foundId) {
+          el.steps = steps;
+          el.id = formattedDate;
+          el.date = formattedDate;
         }
-        return [...acc, item];
-      }, []);
-      setTableData(updateTableData);
+        return el;
+      });
+      setTableData(updateData);
     } else {
       setTableData([
         ...tableData,
@@ -61,8 +74,8 @@ const App = () => {
     setTableData(updateSubmit);
   };
 
-  const handleEdit = (idItem, date, distance) => {
-    setDate(date);
+  const handleEdit = (idItem, dateItem, distance) => {
+    setDate(format(new Date(dateItem), "dd-MM-yyyy"));
     setEdit(true);
     setSteps(distance);
   };
