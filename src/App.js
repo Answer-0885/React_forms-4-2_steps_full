@@ -59,7 +59,9 @@ const App = () => {
           el.steps = steps;
           el.id = formattedDate;
           el.date = formattedDate;
+          el.edit = false;
         }
+
         return el;
       });
       setTableData(updateData);
@@ -85,7 +87,7 @@ const App = () => {
     setDate(format(new Date(dateItem), "dd-MM-yyyy"));
     const foundEdit = tableData.find((el) => el.id === idItem);
     foundEdit.edit = true;
-
+    setEdit(true);
     setSteps(distance);
   };
 
