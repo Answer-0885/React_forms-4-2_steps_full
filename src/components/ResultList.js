@@ -2,7 +2,7 @@ import "App.css";
 import React from "react";
 import ItemResult from "./ItemResult";
 
-const ResultList = ({ submit, handleRemove, handleEdit }) => {
+const ResultList = ({ tableData, handleRemove, handleEdit }) => {
   return (
     <React.Fragment>
       <div className="titleResult">
@@ -11,8 +11,8 @@ const ResultList = ({ submit, handleRemove, handleEdit }) => {
         <span>Действия</span>
       </div>
       <ul className="resultList">
-        {submit.length > 0 ? (
-          submit.map(({ date, distance, id }) => (
+        {tableData.length > 0 ? (
+          tableData.map(({ date, distance, id }) => (
             <ItemResult
               key={id}
               date={date}

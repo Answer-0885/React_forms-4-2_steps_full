@@ -2,52 +2,63 @@ import "App.css";
 import Form from "components/Form";
 import ResultList from "components/ResultList";
 import { useState } from "react";
-import { nanoid } from "nanoid";
+import { format } from "date-fns";
 
 const App = () => {
-  const indexIsFalse = -1;
   const dataDefault = {
     id: "",
-    date: "",
+    date: new Date(),
     distance: "",
+    edit: false,
   };
   const [form, setForm] = useState(dataDefault);
-  const [submit, setSubmit] = useState([]);
+  const [tableData, setTableData] = useState([]);
+  const formattedDate = format(new Date(form.date), "dd-MM-yyyy");
+
   const handleChange = ({ target }) => {
     setForm({ ...form, [target.name]: target.value });
-  };
-  const validateItem = (submit, form) => {
-    return submit.map((elem) => {
-      if (elem.id === form.id) {
-        elem = form;
-      } else if (elem.date === form.date) {
-        elem.distance = Number(elem.distance) + Number(form.distance);
-      }
-      return elem;
-    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const idxEdit = submit.findIndex(({ id }) => id === form.id);
-    const idxDate = submit.findIndex(({ date }) => date === form.date);
-    const editItem = validateItem(submit, form);
-    form.id = nanoid();
-    idxDate !== indexIsFalse && setSubmit((submit[idxDate] = editItem));
-    idxEdit !== indexIsFalse && setSubmit((submit[idxEdit] = editItem));
-    idxDate === indexIsFalse &&
-      idxEdit === indexIsFalse &&
-      setSubmit([...submit, form]);
+    if (form.distance <= 0 || !form.date) {
+      return;
+    }
+    const foundId = tableData.find((d) => d.id === formattedDate?.id);
+    if (foundId) {
+      const updateTableData = tableData.reduce((acc, item) => {
+        if (item.id === foundId) {
+          return [
+            ...acc,
+            {
+              ...item,
+              [item.distance]: Number(item.distance) + Number(form.distance),
+            },
+          ];
+        }
+        return [...acc, item];
+      }, []);
+      setTableData(updateTableData);
+    } else {
+      setTableData([
+        ...tableData,
+        {
+          id: formattedDate,
+          date: formattedDate,
+          distance: form.distance,
+        },
+      ]);
+    }
     setForm(dataDefault);
   };
 
   const handleRemove = (idItem) => {
-    const updateSubmit = submit.filter(({ id }) => id !== idItem);
-    setSubmit(updateSubmit);
+    const updateSubmit = tableData.filter(({ id }) => id !== idItem);
+    setTableData(updateSubmit);
   };
 
   const handleEdit = (idItem, date, distance) => {
-    setForm({ id: idItem, date: date, distance: distance });
+    setForm({ id: idItem, date: date, distance: distance, edit: true });
   };
 
   return (
@@ -61,7 +72,7 @@ const App = () => {
       <ResultList
         handleEdit={handleEdit}
         handleRemove={handleRemove}
-        submit={submit}
+        tableData={tableData}
       />
     </div>
   );
