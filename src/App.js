@@ -5,26 +5,30 @@ import { useState } from "react";
 import { format } from "date-fns";
 
 const App = () => {
-  const dataDefault = {
-    id: "",
-    date: new Date(),
-    distance: "",
-    edit: false,
-  };
-  const [form, setForm] = useState(dataDefault);
+  const [date, setDate] = useState(new Date());
+  const [steps, setSteps] = useState(1);
+  const [edit, setEdit] = useState(false);
+
   const [tableData, setTableData] = useState([]);
-  const formattedDate = format(new Date(form.date), "dd-MM-yyyy");
+  const formattedDate = format(new Date(date), "dd-MM-yyyy");
 
-  const handleChange = ({ target }) => {
-    setForm({ ...form, [target.name]: target.value });
+  const handleDate = ({ target }) => {
+    setDate(target.value);
   };
-
+  const handleSteps = ({ target }) => {
+    setSteps(target.value);
+  };
+  const clearForm = () => {
+    setDate(new Date());
+    setSteps(1);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (form.distance <= 0 || !form.date) {
+    if (steps <= 0 || !date) {
       return;
     }
-    const foundId = tableData.find((d) => d.id === formattedDate?.id);
+    const foundId = tableData.find((d) => d.id === formattedDate);
+
     if (foundId) {
       const updateTableData = tableData.reduce((acc, item) => {
         if (item.id === foundId) {
@@ -32,7 +36,7 @@ const App = () => {
             ...acc,
             {
               ...item,
-              [item.distance]: Number(item.distance) + Number(form.distance),
+              steps: Number(item.steps) + Number(steps),
             },
           ];
         }
@@ -45,29 +49,33 @@ const App = () => {
         {
           id: formattedDate,
           date: formattedDate,
-          distance: form.distance,
+          steps,
         },
       ]);
     }
-    setForm(dataDefault);
+    clearForm();
   };
-
+  console.log(tableData);
   const handleRemove = (idItem) => {
     const updateSubmit = tableData.filter(({ id }) => id !== idItem);
     setTableData(updateSubmit);
   };
 
   const handleEdit = (idItem, date, distance) => {
-    setForm({ id: idItem, date: date, distance: distance, edit: true });
+    setDate(date);
+    setEdit(true);
+    setSteps(distance);
   };
 
   return (
     <div className="container">
       <div className="title">Учёт тренировок</div>
       <Form
-        handleChange={handleChange}
+        handleDate={handleDate}
+        handleSteps={handleSteps}
         handleSubmit={handleSubmit}
-        form={form}
+        date={date}
+        steps={steps}
       />
       <ResultList
         handleEdit={handleEdit}
