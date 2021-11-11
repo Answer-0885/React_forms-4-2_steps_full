@@ -12,8 +12,14 @@ const App = () => {
   const [tableData, setTableData] = useState([]);
   const formattedDate = format(new Date(date), "dd-MM-yyyy");
 
-  const handleDate = ({ target }) => {
-    setDate(target.value);
+  const handleDate = ({ target: { value } }) => {
+    if (
+      format(new Date(value), "dd-MM-yyyy") > format(new Date(), "dd-MM-yyyy")
+    ) {
+      alert("Дата не может быть больше текущей даты");
+    } else {
+      setDate(value);
+    }
   };
   const handleSteps = ({ target }) => {
     setSteps(target.value);
@@ -89,11 +95,13 @@ const App = () => {
         handleSubmit={handleSubmit}
         date={date}
         steps={steps}
+        edit={edit}
       />
       <ResultList
         handleEdit={handleEdit}
         handleRemove={handleRemove}
         tableData={tableData}
+        edit={edit}
       />
     </div>
   );

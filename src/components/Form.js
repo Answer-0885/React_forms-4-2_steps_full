@@ -1,7 +1,7 @@
 import "App.css";
 import { format } from "date-fns";
 
-const Form = ({ handleDate, handleSubmit, handleSteps, steps, date }) => {
+const Form = ({ handleDate, handleSubmit, handleSteps, steps, date, edit }) => {
   return (
     <form onSubmit={handleSubmit} className="form">
       <label className="labelDate" htmlFor="date">
@@ -18,6 +18,7 @@ const Form = ({ handleDate, handleSubmit, handleSteps, steps, date }) => {
         name="date"
         value={format(new Date(date), "yyyy-MM-dd")}
         required={true}
+        readOnly={edit && true}
       />
       <input
         type="number"

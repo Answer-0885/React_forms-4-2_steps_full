@@ -1,7 +1,7 @@
 import "App.css";
 import React from "react";
 
-const ItemResult = ({ id, date, steps, handleRemove, handleEdit }) => {
+const ItemResult = ({ id, date, steps, handleRemove, handleEdit, edit }) => {
   return (
     <li className="itemResult">
       <span>{date}</span>

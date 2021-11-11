@@ -2,7 +2,7 @@ import "App.css";
 import React from "react";
 import ItemResult from "./ItemResult";
 import { nanoid } from "nanoid";
-const ResultList = ({ tableData, handleRemove, handleEdit }) => {
+const ResultList = ({ tableData, handleRemove, handleEdit, edit }) => {
   return (
     <React.Fragment>
       <div className="titleResult">
@@ -20,6 +20,7 @@ const ResultList = ({ tableData, handleRemove, handleEdit }) => {
               handleEdit={handleEdit}
               steps={steps}
               id={id}
+              edit={edit}
             />
           ))
         ) : (
