@@ -83,6 +83,9 @@ const App = () => {
     setTableData(updateSubmit);
   };
 
+  const handleEscape = (e) => {
+    console.log(e.key);
+  };
   const handleEdit = (idItem, dateItem, distance) => {
     const foundEdit = tableData.find((el) => el.id === idItem);
     const isEdit = tableData.find((el) => el.edit);
@@ -95,7 +98,7 @@ const App = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container" onKeyDown={handleEscape}>
       <div className="title">Учёт тренировок</div>
       <Form
         handleDate={handleDate}
@@ -109,7 +112,7 @@ const App = () => {
         handleEdit={handleEdit}
         handleRemove={handleRemove}
         tableData={tableData}
-        edit={edit}
+        isEdit={edit}
       />
     </div>
   );

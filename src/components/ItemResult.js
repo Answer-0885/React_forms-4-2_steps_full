@@ -1,7 +1,16 @@
 import "App.css";
 import React from "react";
 import cn from "classnames";
-const ItemResult = ({ id, date, steps, handleRemove, handleEdit, edit }) => {
+const ItemResult = ({
+  id,
+  date,
+  steps,
+  handleRemove,
+  handleEdit,
+
+  edit,
+  isEdit,
+}) => {
   return (
     <li className={cn("itemResult", { "itemResult activeItem": edit })}>
       <span>{date}</span>
@@ -16,7 +25,7 @@ const ItemResult = ({ id, date, steps, handleRemove, handleEdit, edit }) => {
         />
         <i
           className="fa fa-times"
-          onClick={() => !edit && handleRemove(id)}
+          onClick={() => !isEdit && handleRemove(id)}
           aria-hidden="true"
         />
       </div>
