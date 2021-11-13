@@ -2,7 +2,18 @@ import "App.css";
 import React from "react";
 import ItemResult from "./ItemResult";
 import { nanoid } from "nanoid";
-const ResultList = ({ tableData, handleRemove, handleEdit, isEdit }) => {
+const ResultList = ({
+  tableData,
+  handleRemove,
+  handleEditMode,
+  handleSaveEditChange,
+  isEdit,
+  handleDate,
+  handleSteps,
+  handleSubmit,
+  cancelEditMode,
+  stepsAll,
+}) => {
   return (
     <React.Fragment>
       <div className="titleResult">
@@ -12,16 +23,23 @@ const ResultList = ({ tableData, handleRemove, handleEdit, isEdit }) => {
       </div>
       <ul className="resultList">
         {tableData.length > 0 ? (
-          tableData.map(({ date, steps, id, edit }) => (
+          tableData.map(({ date, steps, id, edit }, idx) => (
             <ItemResult
               key={nanoid()}
               date={date}
+              stepsAll={stepsAll}
               handleRemove={handleRemove}
-              handleEdit={handleEdit}
+              handleEditMode={handleEditMode}
               steps={steps}
               id={id}
               edit={edit}
               isEdit={isEdit}
+              handleDate={handleDate}
+              handleSteps={handleSteps}
+              handleSubmit={handleSubmit}
+              cancelEditMode={cancelEditMode}
+              idx={idx}
+              handleSaveEditChange={handleSaveEditChange}
             />
           ))
         ) : (

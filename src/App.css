@@ -23,7 +23,7 @@ body{
 ;
   justify-content: center;
   align-items: center;
-  border: 2px black solid;
+  border: 1px solid #aeaeae;
   border-radius: 10px;
   background-color: rgba(3, 5, 131, 0.35);
 }
@@ -45,6 +45,15 @@ grid-template-columns: repeat(3, 1fr);
 justify-items: center;
   align-items: center;
 }
+
+
+.form-edit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 .labelDate{
 grid-area: labelDate;
 
@@ -59,7 +68,7 @@ input{
   text-align: center;
   width: 200px;
   height: 50px;
-  border: 2px black solid;
+  border: 0.5px solid #aeaeae;
   border-radius: 10px;
 }
 .inputDistance{
@@ -73,10 +82,10 @@ grid-area: titleResult;
   justify-items: center;
 }
 .resultList{
+  padding: 10px;
   background-color: rgba(0, 0, 100, 0.8);
   color: white;
   grid-area: resultList;
-  border: 2px black solid;
   border-radius: 10px;
 
 }
