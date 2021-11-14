@@ -1,7 +1,7 @@
 import "App.css";
 import { format } from "date-fns";
 
-const Form = ({ handleDate, handleSubmit, handleSteps, steps, date }) => {
+const Form = ({ handleDate, handleSubmit, handleSteps, steps, date, edit }) => {
   return (
     <form onSubmit={handleSubmit} className="form">
       <label className="labelDate" htmlFor="date">
@@ -16,6 +16,7 @@ const Form = ({ handleDate, handleSubmit, handleSteps, steps, date }) => {
         className="inputDate"
         id="date"
         name="date"
+        readOnly={edit && true}
         value={format(new Date(date), "yyyy-MM-dd")}
         required={true}
       />
@@ -26,10 +27,16 @@ const Form = ({ handleDate, handleSubmit, handleSteps, steps, date }) => {
         className="inputDistance"
         id="distance"
         name="distance"
-        value={steps}
+        value={edit ? 1 : steps}
+        readOnly={edit && true}
         placeholder="Number"
       />
-      <button onSubmit={handleSubmit} className="submit" type="submit">
+      <button
+        onSubmit={handleSubmit}
+        className="submit"
+        type="submit"
+        disabled={edit && true}
+      >
         Ok
       </button>
     </form>

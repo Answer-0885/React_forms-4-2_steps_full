@@ -52,11 +52,12 @@ const App = () => {
     ) {
       alert("Дата не может быть больше текущей даты");
     } else {
+      console.log(value);
       setDate(value);
     }
   };
-  const handleSteps = ({ target }) => {
-    setSteps(target.value);
+  const handleSteps = ({ target: { value } }) => {
+    value >= 0 && setSteps(value);
   };
   const clearForm = () => {
     setDate(new Date());
@@ -125,6 +126,8 @@ const App = () => {
     updatedData[id].edit = false;
     setTableData(updatedData);
     setEdit(false);
+    setSteps(1);
+    setDate(new Date());
   };
 
   /**
@@ -135,6 +138,8 @@ const App = () => {
   const handleEditMode = (id) => {
     const updatedData = [...tableData];
     updatedData[id].edit = true;
+    setSteps(updatedData[id].steps);
+    setDate(updatedData[id].date);
     setTableData(updatedData);
     setEdit(true);
   };
@@ -145,8 +150,10 @@ const App = () => {
   const handleSaveEditChange = (idItem) => {
     const foundedItem = tableData.find((el) => el.id === idItem);
     foundedItem.steps = steps;
+    foundedItem.date = date;
     foundedItem.edit = false;
     setEdit(false);
+    setSteps(1);
     // твоя реализация
   };
 
@@ -162,6 +169,7 @@ const App = () => {
         edit={edit}
       />
       <ResultList
+        dateState={date}
         stepsAll={steps}
         handleEditMode={handleEditMode}
         handleRemove={handleRemove}

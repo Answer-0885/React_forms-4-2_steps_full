@@ -16,6 +16,7 @@ const ItemResult = ({
   handleSaveEditChange,
   idx,
   stepsAll,
+  dateState,
 }) => {
   return edit ? (
     <div className="form-edit">
@@ -25,7 +26,7 @@ const ItemResult = ({
         className="inputDate"
         id="date"
         name="date"
-        value={format(new Date(date), "yyyy-MM-dd")}
+        value={format(new Date(dateState), "yyyy-MM-dd")}
         required={true}
       />
       <input
@@ -55,7 +56,7 @@ const ItemResult = ({
             " fa-pencil-square-o": edit,
           })}
           aria-hidden="true"
-          onClick={() => handleEditMode(idx)}
+          onClick={(e) => !isEdit && handleEditMode(idx, e)}
         />
         <i
           className="fa fa-times"
