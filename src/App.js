@@ -8,7 +8,8 @@ const App = () => {
   const [date, setDate] = useState(new Date());
   const [steps, setSteps] = useState(1);
   const [edit, setEdit] = useState(false);
-
+  const [editSteps, setEditSteps] = useState(0);
+  const [editDate, setEditDate] = useState(0);
   const [tableData, setTableData] = useState([]);
   const formattedDate = format(new Date(date), "yyyy-MM-dd");
 
@@ -52,12 +53,11 @@ const App = () => {
     ) {
       alert("Дата не может быть больше текущей даты");
     } else {
-      console.log(value);
-      setDate(value);
+      !edit ? setDate(value) : setEditDate(value);
     }
   };
   const handleSteps = ({ target: { value } }) => {
-    value >= 0 && setSteps(value);
+    !edit ? value >= 0 && setSteps(value) : value >= 0 && setEditSteps(value);
   };
   const clearForm = () => {
     setDate(new Date());
@@ -138,8 +138,8 @@ const App = () => {
   const handleEditMode = (id) => {
     const updatedData = [...tableData];
     updatedData[id].edit = true;
-    setSteps(updatedData[id].steps);
-    setDate(updatedData[id].date);
+    setEditSteps(updatedData[id].steps);
+    setEditDate(updatedData[id].date);
     setTableData(updatedData);
     setEdit(true);
   };
@@ -149,8 +149,9 @@ const App = () => {
    */
   const handleSaveEditChange = (idItem) => {
     const foundedItem = tableData.find((el) => el.id === idItem);
-    foundedItem.steps = steps;
-    foundedItem.date = date;
+    foundedItem.steps = editSteps;
+    foundedItem.date = editDate;
+    foundedItem.id = editDate;
     foundedItem.edit = false;
     setEdit(false);
     setSteps(1);
@@ -169,7 +170,8 @@ const App = () => {
         edit={edit}
       />
       <ResultList
-        dateState={date}
+        editDate={editDate}
+        editSteps={editSteps}
         stepsAll={steps}
         handleEditMode={handleEditMode}
         handleRemove={handleRemove}

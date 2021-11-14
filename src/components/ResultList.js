@@ -13,7 +13,8 @@ const ResultList = ({
   handleSubmit,
   cancelEditMode,
   stepsAll,
-  dateState,
+  editDate,
+  editSteps,
 }) => {
   return (
     <React.Fragment>
@@ -40,7 +41,8 @@ const ResultList = ({
               handleSubmit={handleSubmit}
               cancelEditMode={cancelEditMode}
               idx={idx}
-              dateState={dateState}
+              editDate={editDate}
+              editSteps={editSteps}
               handleSaveEditChange={handleSaveEditChange}
             />
           ))

@@ -16,7 +16,8 @@ const ItemResult = ({
   handleSaveEditChange,
   idx,
   stepsAll,
-  dateState,
+  editDate,
+  editSteps,
 }) => {
   return edit ? (
     <div className="form-edit">
@@ -26,7 +27,7 @@ const ItemResult = ({
         className="inputDate"
         id="date"
         name="date"
-        value={format(new Date(dateState), "yyyy-MM-dd")}
+        value={format(new Date(editDate), "yyyy-MM-dd")}
         required={true}
       />
       <input
@@ -36,7 +37,7 @@ const ItemResult = ({
         className="inputDistance"
         id="distance"
         name="distance"
-        value={isEdit ? stepsAll : steps}
+        value={isEdit && editSteps}
         placeholder="Number"
       />
       <button onClick={() => cancelEditMode(idx)} className="submit">
