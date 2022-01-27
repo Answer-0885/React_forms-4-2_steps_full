@@ -150,11 +150,13 @@ font-size: 20px;
     justify-self: center;
   }
   .resultList{
-   width: 350px;
+   width: 330px;
   }
   .itemResult{
     grid-template-columns: repeat(3,120px);
+
   }
+
 }
 .itemResult>*{
   font-size: 22px;

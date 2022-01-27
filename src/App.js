@@ -1,18 +1,13 @@
 import "App.css";
 import Form from "components/Form";
 import ResultList from "components/ResultList";
-import { useState, useEffect } from "react";
-import { format } from "date-fns";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { handleKey } from "./actions/createActions";
 
 const App = () => {
-  const [date, setDate] = useState(new Date());
-  const [steps, setSteps] = useState(1);
-  const [edit, setEdit] = useState(false);
-  const [editSteps, setEditSteps] = useState(0);
-  const [editDate, setEditDate] = useState(0);
-  const [tableData, setTableData] = useState([]);
-  const formattedDate = format(new Date(date), "yyyy-MM-dd");
-
+  const { edit } = useSelector((state) => state.reducerSteps);
+  const dispatch = useDispatch();
   /**
    * Функция handleKey очень простая
    * если мы нажали на escape - с окна снимается прослушчик событий
@@ -21,15 +16,11 @@ const App = () => {
    * то и следить незачем. Ну и по клику на escape вызывается хук setEdit и отменяет глобальный режим редактирования
    * и также надо пройти по всем записям и отменить edit true у которой есть;
    */
-  const handleKey = (e) => {
+  const handleEscKey = (e) => {
     console.log("e.keyCode", e.keyCode);
     if (e.keyCode === 27) {
-      window.removeEventListener("keydown", handleKey);
-      setEdit(false);
-      const updatedData = tableData.map((item) =>
-        item.edit ? { ...item, edit: false } : item
-      );
-      setTableData(updatedData);
+      window.removeEventListener("keydown", handleEscKey);
+      dispatch(handleKey());
     }
   };
 
@@ -43,145 +34,15 @@ const App = () => {
    */
   useEffect(() => {
     console.log("вызываем хук useEffect только когда изменился edit!");
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
+    window.addEventListener("keydown", handleEscKey);
+    return () => window.removeEventListener("keydown", handleEscKey);
   }, [edit]);
-
-  const handleDate = ({ target: { value } }) => {
-    if (
-      format(new Date(value), "yyyy-MM-dd") > format(new Date(), "yyyy-MM-dd")
-    ) {
-      alert("Дата не может быть больше текущей даты");
-    } else {
-      !edit ? setDate(value) : setEditDate(value);
-    }
-  };
-  const handleSteps = ({ target: { value } }) => {
-    !edit ? value >= 0 && setSteps(value) : value >= 0 && setEditSteps(value);
-  };
-  const clearForm = () => {
-    setDate(new Date());
-    setSteps(1);
-    setEdit(false);
-  };
-  const sumSteps = (foundId) => {
-    return tableData.reduce((acc, item) => {
-      if (item.id === foundId) {
-        return [
-          ...acc,
-          {
-            ...item,
-            steps: Number(item.steps) + Number(steps),
-          },
-        ];
-      }
-      item.edit = false;
-      return [...acc, item];
-    }, []);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (steps <= 0 || !date) {
-      return;
-    }
-    const foundId = tableData.find((d) => d.id === formattedDate)?.id;
-
-    if (foundId && !edit) {
-      setTableData(sumSteps(foundId));
-    } else if (edit) {
-      const updateData = tableData.map((el) => {
-        if (el.id === foundId) {
-          el.steps = steps;
-          el.id = formattedDate;
-          el.date = formattedDate;
-          el.edit = false;
-        }
-
-        return el;
-      });
-      setTableData(updateData);
-    } else {
-      setTableData([
-        ...tableData,
-        {
-          id: formattedDate,
-          date: formattedDate,
-          steps,
-        },
-      ]);
-    }
-    clearForm();
-  };
-
-  const handleRemove = (idItem) => {
-    const updateSubmit = tableData.filter(({ id }) => id !== idItem);
-    setTableData(updateSubmit);
-  };
-
-  /**
-   * отключаем режим редактирования у конкретной записи
-   */
-  const cancelEditMode = (id) => {
-    const updatedData = [...tableData];
-    updatedData[id].edit = false;
-    setTableData(updatedData);
-    setEdit(false);
-    setSteps(1);
-    setDate(new Date());
-  };
-
-  /**
-   * Включаем режим редактирования у конкретной записи
-   * также включаем глобальный режим редактирования,
-   * чтобы понимать, что наше приложение редактируется
-   */
-  const handleEditMode = (id) => {
-    const updatedData = [...tableData];
-    updatedData[id].edit = true;
-    setEditSteps(updatedData[id].steps);
-    setEditDate(updatedData[id].date);
-    setTableData(updatedData);
-    setEdit(true);
-  };
-
-  /**
-   * Функция для сохранения записи, после редактирования (вызывается по клику на кнопку save)
-   */
-  const handleSaveEditChange = (idItem) => {
-    const foundedItem = tableData.find((el) => el.id === idItem);
-    foundedItem.steps = editSteps;
-    foundedItem.date = editDate;
-    foundedItem.id = editDate;
-    foundedItem.edit = false;
-    setEdit(false);
-    setSteps(1);
-    // твоя реализация
-  };
 
   return (
     <div className="container">
       <div className="title">Учёт тренировок</div>
-      <Form
-        handleDate={handleDate}
-        handleSteps={handleSteps}
-        handleSubmit={handleSubmit}
-        date={date}
-        steps={steps}
-        edit={edit}
-      />
-      <ResultList
-        editDate={editDate}
-        editSteps={editSteps}
-        stepsAll={steps}
-        handleEditMode={handleEditMode}
-        handleRemove={handleRemove}
-        tableData={tableData}
-        isEdit={edit}
-        handleDate={handleDate}
-        handleSteps={handleSteps}
-        cancelEditMode={cancelEditMode}
-        handleSaveEditChange={handleSaveEditChange}
-      />
+      <Form />
+      <ResultList />
     </div>
   );
 };

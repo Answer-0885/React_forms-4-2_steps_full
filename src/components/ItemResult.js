@@ -2,27 +2,38 @@ import "App.css";
 import React from "react";
 import cn from "classnames";
 import { format } from "date-fns";
-const ItemResult = ({
-  id,
-  date,
-  steps,
-  handleRemove,
-  handleEditMode,
-  edit,
-  isEdit,
+import {
   handleDate,
   handleSteps,
-  cancelEditMode,
   handleSaveEditChange,
-  idx,
-  stepsAll,
-  editDate,
-  editSteps,
-}) => {
+  handleEditMode,
+  cancelEditMode,
+  handleRemove,
+} from "../actions/createActions";
+import { useSelector, useDispatch } from "react-redux";
+
+const ItemResult = ({ id, date, steps, idx }) => {
+  const dispatch = useDispatch();
+  const { editDate, editSteps, edit } = useSelector(
+    (state) => state.reducerSteps
+  );
+  const handleDateForm = ({ target: { value } }) => dispatch(handleDate(value));
+  const handleStepsForm = ({ target: { value } }) =>
+    dispatch(handleSteps(value));
+  const handleSaveEdit = (id) => {
+    dispatch(handleSaveEditChange(id));
+  };
+  const cancelEditModeSteps = (id) => dispatch(cancelEditMode(id));
+  const handleEditModeSteps = (idx, e) => {
+    e.preventDefault();
+    dispatch(handleEditMode(idx));
+  };
+  const handleRemoveItem = (id) => dispatch(handleRemove(id));
+
   return edit ? (
     <div className="form-edit">
       <input
-        onChange={handleDate}
+        onChange={handleDateForm}
         type="date"
         className="inputDate"
         id="date"
@@ -32,18 +43,18 @@ const ItemResult = ({
       />
       <input
         type="number"
-        onChange={handleSteps}
+        onChange={handleStepsForm}
         required={true}
         className="inputDistance"
         id="distance"
         name="distance"
-        value={isEdit && editSteps}
+        value={edit && editSteps}
         placeholder="Number"
       />
-      <button onClick={() => cancelEditMode(idx)} className="submit">
+      <button onClick={() => cancelEditModeSteps(idx)} className="submit">
         cancel
       </button>
-      <button className="submit" onClick={() => handleSaveEditChange(id)}>
+      <button className="submit" onClick={() => handleSaveEdit(id)}>
         save
       </button>
     </div>
@@ -57,11 +68,11 @@ const ItemResult = ({
             " fa-pencil-square-o": edit,
           })}
           aria-hidden="true"
-          onClick={(e) => !isEdit && handleEditMode(idx, e)}
+          onClick={(e) => !edit && handleEditModeSteps(idx, e)}
         />
         <i
           className="fa fa-times"
-          onClick={() => !isEdit && handleRemove(id)}
+          onClick={() => !edit && handleRemoveItem(id)}
           aria-hidden="true"
         />
       </div>

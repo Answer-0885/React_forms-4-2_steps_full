@@ -2,20 +2,11 @@ import "App.css";
 import React from "react";
 import ItemResult from "./ItemResult";
 import { nanoid } from "nanoid";
-const ResultList = ({
-  tableData,
-  handleRemove,
-  handleEditMode,
-  handleSaveEditChange,
-  isEdit,
-  handleDate,
-  handleSteps,
-  handleSubmit,
-  cancelEditMode,
-  stepsAll,
-  editDate,
-  editSteps,
-}) => {
+import { useSelector } from "react-redux";
+
+const ResultList = () => {
+  const { tableData } = useSelector((state) => state.reducerSteps);
+
   return (
     <React.Fragment>
       <div className="titleResult">
@@ -29,21 +20,10 @@ const ResultList = ({
             <ItemResult
               key={nanoid()}
               date={date}
-              stepsAll={stepsAll}
-              handleRemove={handleRemove}
-              handleEditMode={handleEditMode}
               steps={steps}
               id={id}
               edit={edit}
-              isEdit={isEdit}
-              handleDate={handleDate}
-              handleSteps={handleSteps}
-              handleSubmit={handleSubmit}
-              cancelEditMode={cancelEditMode}
               idx={idx}
-              editDate={editDate}
-              editSteps={editSteps}
-              handleSaveEditChange={handleSaveEditChange}
             />
           ))
         ) : (

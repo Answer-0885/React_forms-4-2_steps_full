@@ -1,9 +1,29 @@
 import "App.css";
 import { format } from "date-fns";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  handleDate,
+  handleSteps,
+  handleSubmit,
+  clearForm,
+} from "actions/createActions";
 
-const Form = ({ handleDate, handleSubmit, handleSteps, steps, date, edit }) => {
+const Form = () => {
+  const dispatch = useDispatch();
+  const { date, steps, edit } = useSelector((state) => state.reducerSteps);
+
+  const handleDateForm = ({ target: { value } }) => dispatch(handleDate(value));
+
+  const handleStepsForm = ({ target: { value } }) =>
+    dispatch(handleSteps(value));
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    dispatch(handleSubmit());
+    dispatch(clearForm());
+  };
   return (
-    <form onSubmit={handleSubmit} className="form">
+    <form onSubmit={handleSubmitForm} className="form">
       <label className="labelDate" htmlFor="date">
         Дата(ДД.ММ.ГГ)
       </label>
@@ -11,7 +31,7 @@ const Form = ({ handleDate, handleSubmit, handleSteps, steps, date, edit }) => {
         Пройдено км
       </label>
       <input
-        onChange={handleDate}
+        onChange={handleDateForm}
         type="date"
         className="inputDate"
         id="date"
@@ -22,7 +42,7 @@ const Form = ({ handleDate, handleSubmit, handleSteps, steps, date, edit }) => {
       />
       <input
         type="number"
-        onChange={handleSteps}
+        onChange={handleStepsForm}
         required={true}
         className="inputDistance"
         id="distance"
@@ -32,7 +52,7 @@ const Form = ({ handleDate, handleSubmit, handleSteps, steps, date, edit }) => {
         placeholder="Number"
       />
       <button
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitForm}
         className="submit"
         type="submit"
         disabled={edit && true}

@@ -1,0 +1,9 @@
+export const HANDLE_KEY = "HANDLE_KEY";
+export const HANDLE_DATE = "HANDLE_DATE";
+export const HANDLE_STEPS = "HANDLE_STEPS";
+export const CLEAR_FORM = "CLEAR_FORM";
+export const HANDLE_SUBMIT = "HANDLE_SUBMIT";
+export const HANDLE_REMOVE = "HANDLE_REMOVE";
+export const CANCEL_EDIT_MODE = "CANCEL_EDIT_MODE";
+export const HANDLE_EDIT_MODE = "HANDLE_EDIT_MODE";
+export const HANDLE_SAVE_EDIT_CHANGE = "HANDLE_SAVE_EDIT_CHANGE";
