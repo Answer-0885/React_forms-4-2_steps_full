@@ -3,7 +3,7 @@ import Form from "components/Form";
 import ResultList from "components/ResultList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { handleKey } from "./actions/createActions";
+import { handleKey } from "actions/createActions";
 
 const App = () => {
   const { edit } = useSelector((state) => state.reducerSteps);

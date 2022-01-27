@@ -9,7 +9,7 @@ import {
   handleEditMode,
   cancelEditMode,
   handleRemove,
-} from "../actions/createActions";
+} from "actions/createActions";
 import { useSelector, useDispatch } from "react-redux";
 
 const ItemResult = ({ id, date, steps, idx }) => {
