@@ -12,22 +12,17 @@ import {
 } from "actions/createActions";
 import { useSelector, useDispatch } from "react-redux";
 
-const ItemResult = ({ id, date, steps, idx }) => {
+const ItemResult = ({ id, date, steps, idx, edit }) => {
   const dispatch = useDispatch();
-  const { editDate, editSteps, edit } = useSelector(
-    (state) => state.reducerSteps
-  );
+  const { editDate, editSteps } = useSelector((state) => state.reducerSteps);
   const handleDateForm = ({ target: { value } }) => dispatch(handleDate(value));
   const handleStepsForm = ({ target: { value } }) =>
     dispatch(handleSteps(value));
-  const handleSaveEdit = (id) => {
-    dispatch(handleSaveEditChange(id));
-  };
+
+  const handleSaveEdit = (id) => dispatch(handleSaveEditChange(id));
+
   const cancelEditModeSteps = (id) => dispatch(cancelEditMode(id));
-  const handleEditModeSteps = (idx, e) => {
-    e.preventDefault();
-    dispatch(handleEditMode(idx));
-  };
+  const handleEditModeSteps = (idx) => dispatch(handleEditMode(idx));
   const handleRemoveItem = (id) => dispatch(handleRemove(id));
 
   return edit ? (
@@ -68,7 +63,7 @@ const ItemResult = ({ id, date, steps, idx }) => {
             " fa-pencil-square-o": edit,
           })}
           aria-hidden="true"
-          onClick={(e) => !edit && handleEditModeSteps(idx, e)}
+          onClick={() => !edit && handleEditModeSteps(idx)}
         />
         <i
           className="fa fa-times"

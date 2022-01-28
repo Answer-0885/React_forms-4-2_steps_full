@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleKey } from "actions/createActions";
 
 const App = () => {
-  const { edit } = useSelector((state) => state.reducerSteps);
+  const { isEdit } = useSelector((state) => state.reducerSteps);
   const dispatch = useDispatch();
   /**
    * Функция handleKey очень простая
@@ -17,7 +17,6 @@ const App = () => {
    * и также надо пройти по всем записям и отменить edit true у которой есть;
    */
   const handleEscKey = (e) => {
-    console.log("e.keyCode", e.keyCode);
     if (e.keyCode === 27) {
       window.removeEventListener("keydown", handleEscKey);
       dispatch(handleKey());
@@ -36,7 +35,7 @@ const App = () => {
     console.log("вызываем хук useEffect только когда изменился edit!");
     window.addEventListener("keydown", handleEscKey);
     return () => window.removeEventListener("keydown", handleEscKey);
-  }, [edit]);
+  }, [isEdit]);
 
   return (
     <div className="container">

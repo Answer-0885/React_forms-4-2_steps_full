@@ -14,7 +14,7 @@ import { format } from "date-fns";
 const initialState = {
   date: new Date(),
   steps: 1,
-  edit: false,
+  isEdit: false,
   editSteps: 0,
   editDate: 0,
   tableData: [],
@@ -45,12 +45,12 @@ const reducerSteps = (state = initialState, action) => {
       ) {
         alert("Дата не может быть больше текущей даты");
       } else {
-        return !state.edit
+        return !state.isEdit
           ? { ...state, date: action.payload }
           : { ...state, editDate: action.payload };
       }
     case HANDLE_STEPS:
-      return !state.edit
+      return !state.isEdit
         ? action.payload >= 0 && { ...state, steps: action.payload }
         : action.payload >= 0 && {
             ...state,
@@ -63,9 +63,9 @@ const reducerSteps = (state = initialState, action) => {
       }
       const foundId = state.tableData.find((d) => d.id === formattedDate)?.id;
 
-      if (foundId && !state.edit) {
+      if (foundId && !state.isEdit) {
         return { ...state, tableData: sumSteps(foundId) };
-      } else if (state.edit) {
+      } else if (state.isEdit) {
         const updateData = state.tableData.map((el) => {
           if (el.id === foundId) {
             el.steps = state.steps;
@@ -90,7 +90,8 @@ const reducerSteps = (state = initialState, action) => {
         };
       }
     case CLEAR_FORM:
-      return { ...state, date: new Date(), steps: 1, edit: false };
+      return { ...state, date: new Date(), steps: 1, isEdit: false };
+
     case HANDLE_EDIT_MODE:
       const id = action.payload;
       const updatedData = [...state.tableData];
@@ -100,7 +101,7 @@ const reducerSteps = (state = initialState, action) => {
         editSteps: updatedData[id].steps,
         editDate: updatedData[id].date,
         tableData: updatedData,
-        edit: true,
+        isEdit: true,
       };
     case HANDLE_SAVE_EDIT_CHANGE:
       const idItem = action.payload;
@@ -109,7 +110,7 @@ const reducerSteps = (state = initialState, action) => {
       foundedItem.date = state.editDate;
       foundedItem.id = state.editDate;
       foundedItem.edit = false;
-      return { ...state, edit: false, steps: 1 };
+      return { ...state, isEdit: false, steps: 1 };
     case CANCEL_EDIT_MODE:
       const data = [...state.tableData];
       const idElem = action.payload;
@@ -117,7 +118,7 @@ const reducerSteps = (state = initialState, action) => {
       return {
         ...state,
         tableData: data,
-        edit: false,
+        isEdit: false,
         steps: 1,
         date: new Date(),
       };
@@ -129,7 +130,7 @@ const reducerSteps = (state = initialState, action) => {
       const dataUpdated = state.tableData.map((item) =>
         item.edit ? { ...item, edit: false } : item
       );
-      return { ...state, edit: false, tableData: dataUpdated };
+      return { ...state, isEdit: false, tableData: dataUpdated };
 
     default:
       return state;

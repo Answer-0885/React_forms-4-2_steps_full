@@ -10,7 +10,7 @@ import {
 
 const Form = () => {
   const dispatch = useDispatch();
-  const { date, steps, edit } = useSelector((state) => state.reducerSteps);
+  const { date, steps, isEdit } = useSelector((state) => state.reducerSteps);
 
   const handleDateForm = ({ target: { value } }) => dispatch(handleDate(value));
 
@@ -36,7 +36,7 @@ const Form = () => {
         className="inputDate"
         id="date"
         name="date"
-        readOnly={edit && true}
+        readOnly={isEdit && true}
         value={format(new Date(date), "yyyy-MM-dd")}
         required={true}
       />
@@ -47,15 +47,15 @@ const Form = () => {
         className="inputDistance"
         id="distance"
         name="distance"
-        value={edit ? 1 : steps}
-        readOnly={edit && true}
+        value={isEdit ? 1 : steps}
+        readOnly={isEdit}
         placeholder="Number"
       />
       <button
         onSubmit={handleSubmitForm}
         className="submit"
         type="submit"
-        disabled={edit && true}
+        disabled={isEdit}
       >
         Ok
       </button>
